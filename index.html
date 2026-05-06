@@ -1,0 +1,186 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.showcase{font-family:var(--font-sans);padding:1.5rem 0;color:var(--color-text-primary)}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.header-left{display:flex;align-items:center;gap:12px}
+.avatar{width:44px;height:44px;border-radius:50%;background:#D4537E;display:flex;align-items:center;justify-content:center;color:#F4C0D1;font-size:18px;flex-shrink:0}
+.model-name{font-size:18px;font-weight:500}
+.model-sub{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.badge{background:#FBEAF0;color:#993556;font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px}
+.stats-row{display:flex;gap:10px;margin-bottom:1.25rem}
+.stat-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;flex:1;text-align:center}
+.stat-label{font-size:11px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.stat-value{font-size:20px;font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px}
+.video-card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s}
+.video-card:hover{border-color:#ED93B1;transform:translateY(-2px)}
+.thumb{width:100%;aspect-ratio:9/16;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.thumb-icon{font-size:38px;color:#D4537E;opacity:.4;transition:opacity .15s}
+.video-card:hover .thumb-icon{opacity:.65}
+.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.15);opacity:0;transition:opacity .15s}
+.video-card:hover .play-overlay{opacity:1}
+.play-circle{width:44px;height:44px;border-radius:50%;background:#D4537E;display:flex;align-items:center;justify-content:center;color:#FBEAF0;font-size:18px}
+.num-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.5);color:#fff;font-size:10px;padding:2px 7px;border-radius:4px}
+.card-info{padding:9px 12px 11px}
+.card-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.card-meta{font-size:11px;color:var(--color-text-secondary)}
+.cta-section{margin-top:2rem;border-top:0.5px solid var(--color-border-tertiary);padding-top:2rem;display:flex;flex-direction:column;align-items:center;gap:1.25rem}
+.cta-title{font-size:22px;font-weight:500;text-align:center;color:var(--color-text-primary);letter-spacing:.01em}
+.cta-video-wrap{width:220px;aspect-ratio:9/16;border-radius:var(--border-radius-lg);overflow:hidden;border:0.5px solid var(--color-border-tertiary);background:#000;position:relative;cursor:pointer}
+.cta-video-wrap video{width:100%;height:100%;object-fit:cover}
+.cta-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2);transition:opacity .15s}
+.cta-video-wrap:hover .cta-play-overlay{background:rgba(0,0,0,.1)}
+.cta-play-circle{width:52px;height:52px;border-radius:50%;background:#D4537E;display:flex;align-items:center;justify-content:center;color:#FBEAF0;font-size:22px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:#D4537E;color:#FBEAF0;font-size:15px;font-weight:500;padding:14px 28px;border-radius:var(--border-radius-lg);border:none;cursor:pointer;text-decoration:none;transition:background .15s,transform .1s;letter-spacing:.02em}
+.cta-btn:hover{background:#993556;transform:scale(1.03)}
+.cta-btn:active{transform:scale(0.98)}
+.modal-backdrop{display:none;position:absolute;inset:0;background:rgba(0,0,0,.75);z-index:10;align-items:center;justify-content:center;min-height:600px}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);width:320px;max-width:95%;overflow:hidden}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.modal-title{font-size:14px;font-weight:500}
+.close-btn{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:18px;padding:2px;border-radius:4px;display:flex;align-items:center;justify-content:center}
+.close-btn:hover{color:var(--color-text-primary)}
+.video-wrapper{width:100%;aspect-ratio:9/16;background:#000}
+.video-wrapper video{width:100%;height:100%;object-fit:contain}
+.modal-footer{padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.modal-sub{font-size:12px;color:var(--color-text-secondary)}
+.modal-likes{display:flex;align-items:center;gap:4px;font-size:12px;color:#D4537E}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+</style>
+
+<div class="showcase">
+  <h2 class="sr-only">Mostrador de vídeos exclusivos com CTA</h2>
+  <div class="header">
+    <div class="header-left">
+      <div class="avatar"><i class="ti ti-star" aria-hidden="true"></i></div>
+      <div>
+        <div class="model-name">Sua Modelo</div>
+        <div class="model-sub">Conteúdo exclusivo</div>
+      </div>
+      <span class="badge">✦ Premium</span>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Vídeos</div><div class="stat-value">13</div></div>
+    <div class="stat-card"><div class="stat-label">Visualizações</div><div class="stat-value">4.2k</div></div>
+    <div class="stat-card"><div class="stat-label">Curtidas</div><div class="stat-value">1.8k</div></div>
+    <div class="stat-card"><div class="stat-label">Duração total</div><div class="stat-value">47min</div></div>
+  </div>
+  <div class="grid" id="grid"></div>
+
+  <div class="cta-section">
+    <div class="cta-title">QUER GOZAR COM MINHAS AMIGUINHAS?</div>
+    <div class="cta-video-wrap" id="cta-card">
+      <video id="cta-video" playsinline preload="none" loop="false"
+        src="https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd399dfcf77865dc98f32/download.mp4">
+      </video>
+      <div class="cta-play-overlay" id="cta-overlay">
+        <div class="cta-play-circle"><i class="ti ti-player-play" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <a class="cta-btn" href="https://t.me/laismendesss_bot?start=58ab5204" target="_blank" rel="noopener">
+      <i class="ti ti-send" aria-hidden="true"></i> ENTRE AGORA NO GRUPINHO
+    </a>
+  </div>
+
+  <div class="modal-backdrop" id="backdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">Vídeo 1</span>
+        <button class="close-btn" id="close-btn" aria-label="Fechar"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="video-wrapper">
+        <video id="modal-video" controls playsinline preload="none"></video>
+      </div>
+      <div class="modal-footer">
+        <span class="modal-sub" id="modal-sub"></span>
+        <span class="modal-likes"><i class="ti ti-heart" aria-hidden="true"></i> <span id="modal-likes">0</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const videos=[
+  {id:1,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058c24b7e4dd4a03587/download.mp4",likes:312,views:"1.1k",icon:"ti-camera",color:"#F4C0D1"},
+  {id:2,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058347ef2c1f860c825/download.mp4",likes:241,views:"890",icon:"ti-moon-stars",color:"#B5D4F4"},
+  {id:3,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058c24b7e4dd4a0358c/download.mp4",likes:189,views:"670",icon:"ti-heart",color:"#9FE1CB"},
+  {id:4,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059c24b7e4dd4a035a5/download.mp4",likes:298,views:"952",icon:"ti-sparkles",color:"#F5C4B3"},
+  {id:5,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059347ef2c1f860c82e/download.mp4",likes:175,views:"540",icon:"ti-sun",color:"#CECBF6"},
+  {id:6,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059c24b7e4dd4a035ae/download.mp4",likes:220,views:"780",icon:"ti-moon",color:"#F4C0D1"},
+  {id:7,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059347ef2c1f860c830/download.mp4",likes:155,views:"420",icon:"ti-camera",color:"#FAC775"},
+  {id:8,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96269/download.mp4",likes:344,views:"1.3k",icon:"ti-droplet",color:"#B5D4F4"},
+  {id:9,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96267/download.mp4",likes:112,views:"310",icon:"ti-coffee",color:"#9FE1CB"},
+  {id:10,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc9626e/download.mp4",likes:401,views:"1.5k",icon:"ti-star",color:"#F5C4B3"},
+  {id:11,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96265/download.mp4",likes:98,views:"280",icon:"ti-brightness",color:"#CECBF6"},
+  {id:12,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd17e347ef2c1f860d97a/download.mp4",likes:267,views:"860",icon:"ti-camera",color:"#F4C0D1"},
+  {id:13,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd17ec24b7e4dd4a04607/download.mp4",likes:329,views:"1.1k",icon:"ti-heart",color:"#FAC775"},
+];
+
+const grid=document.getElementById("grid");
+const backdrop=document.getElementById("backdrop");
+const modalVideo=document.getElementById("modal-video");
+const modalTitle=document.getElementById("modal-title");
+const modalSub=document.getElementById("modal-sub");
+const modalLikes=document.getElementById("modal-likes");
+const closeBtn=document.getElementById("close-btn");
+
+grid.innerHTML=videos.map(v=>`
+  <div class="video-card" data-id="${v.id}">
+    <div class="thumb" style="background:${v.color}22">
+      <i class="ti ${v.icon} thumb-icon" aria-hidden="true"></i>
+      <div class="play-overlay"><div class="play-circle"><i class="ti ti-player-play" aria-hidden="true"></i></div></div>
+      <span class="num-badge">${String(v.id).padStart(2,"0")}</span>
+    </div>
+    <div class="card-info">
+      <div class="card-title">Vídeo ${v.id}</div>
+      <div class="card-meta">${v.views} views &middot; <span style="color:#D4537E">${v.likes} curtidas</span></div>
+    </div>
+  </div>
+`).join("");
+
+function closeModal(){
+  backdrop.classList.remove("open");
+  modalVideo.pause();
+  modalVideo.removeAttribute("src");
+  modalVideo.load();
+}
+
+grid.addEventListener("click",e=>{
+  const card=e.target.closest(".video-card");
+  if(!card)return;
+  const v=videos[parseInt(card.dataset.id)-1];
+  modalTitle.textContent=`Vídeo ${v.id}`;
+  modalSub.textContent=`${v.views} visualizações`;
+  modalLikes.textContent=v.likes;
+  modalVideo.src=v.src;
+  modalVideo.load();
+  backdrop.classList.add("open");
+});
+
+closeBtn.addEventListener("click",closeModal);
+backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeModal()});
+
+const ctaCard=document.getElementById("cta-card");
+const ctaVideo=document.getElementById("cta-video");
+const ctaOverlay=document.getElementById("cta-overlay");
+
+ctaCard.addEventListener("click",()=>{
+  if(ctaVideo.paused){
+    ctaVideo.play();
+    ctaOverlay.style.opacity="0";
+    ctaOverlay.style.pointerEvents="none";
+  } else {
+    ctaVideo.pause();
+    ctaOverlay.style.opacity="1";
+    ctaOverlay.style.pointerEvents="auto";
+  }
+});
+
+ctaVideo.addEventListener("ended",()=>{
+  ctaOverlay.style.opacity="1";
+  ctaOverlay.style.pointerEvents="auto";
+});
+</script>
