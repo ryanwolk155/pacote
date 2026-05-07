@@ -1,122 +1,128 @@
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-.showcase{font-family:var(--font-sans);padding:1.5rem 0;color:var(--color-text-primary)}
+.showcase{font-family:'DM Sans',var(--font-sans);padding:1.25rem 0;color:var(--color-text-primary)}
 .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
-.header-left{display:flex;align-items:center;gap:12px}
-.avatar{width:44px;height:44px;border-radius:50%;background:#D4537E;display:flex;align-items:center;justify-content:center;color:#F4C0D1;font-size:18px;flex-shrink:0}
-.model-name{font-size:18px;font-weight:500}
-.model-sub{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
-.badge{background:#FBEAF0;color:#993556;font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px}
-.stats-row{display:flex;gap:10px;margin-bottom:1.25rem}
-.stat-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;flex:1;text-align:center}
-.stat-label{font-size:11px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
-.stat-value{font-size:20px;font-weight:500}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px}
-.video-card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s}
-.video-card:hover{border-color:#ED93B1;transform:translateY(-2px)}
-.thumb{width:100%;aspect-ratio:9/16;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.thumb-icon{font-size:38px;color:#D4537E;opacity:.4;transition:opacity .15s}
-.video-card:hover .thumb-icon{opacity:.65}
-.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.15);opacity:0;transition:opacity .15s}
-.video-card:hover .play-overlay{opacity:1}
-.play-circle{width:44px;height:44px;border-radius:50%;background:#D4537E;display:flex;align-items:center;justify-content:center;color:#FBEAF0;font-size:18px}
-.num-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.5);color:#fff;font-size:10px;padding:2px 7px;border-radius:4px}
-.card-info{padding:9px 12px 11px}
-.card-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
-.card-meta{font-size:11px;color:var(--color-text-secondary)}
+.header-left{display:flex;align-items:center;gap:10px}
+.avatar{width:42px;height:42px;border-radius:50%;background:#CECBF6;display:flex;align-items:center;justify-content:center;color:#3C3489;font-size:18px;flex-shrink:0}
+.model-name{font-family:'DM Serif Display',serif;font-size:17px;font-weight:400}
+.model-sub{font-size:11px;color:var(--color-text-secondary);margin-top:1px;text-transform:uppercase;letter-spacing:.04em}
+.badge{background:#EEEDFE;color:#534AB7;font-size:10px;font-weight:500;padding:3px 10px;border-radius:20px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.25rem}
+.stat-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 8px;text-align:center}
+.stat-label{font-size:9px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px;font-weight:500}
+.stat-value{font-family:'DM Serif Display',serif;font-size:18px;font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.video-card{background:var(--color-background-primary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);overflow:hidden;cursor:pointer;transition:border-color .2s}
+.video-card:active{opacity:.85}
+.thumb{width:100%;aspect-ratio:9/16;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.thumb-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(12px);transform:scale(1.1);transition:filter .3s}
+.thumb-icon{font-size:28px;opacity:.5;position:relative;z-index:1;transition:opacity .2s}
+.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;background:rgba(0,0,0,.18)}
+.play-circle{width:38px;height:38px;border-radius:50%;background:#7F77DD;display:flex;align-items:center;justify-content:center;color:#EEEDFE;font-size:15px}
+.num-badge{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.45);color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;font-weight:500;z-index:3}
+.card-info{padding:7px 8px 9px}
+.card-title{font-size:11px;font-weight:500;margin-bottom:2px}
+.card-meta{font-size:10px;color:var(--color-text-secondary)}
+.card-likes{color:#534AB7}
+
+.video-thumb-player{position:relative;width:100%;aspect-ratio:9/16;cursor:pointer}
+.video-thumb-player video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.video-thumb-player video.playing{opacity:1}
+.video-thumb-player .blur-cover{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+.video-thumb-player .blur-cover.hidden{opacity:0;pointer-events:none}
+.blur-bg{position:absolute;inset:0;filter:blur(14px);transform:scale(1.12)}
+.blur-icon{font-size:28px;opacity:.45;position:relative;z-index:1}
+.thumb-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}
+.thumb-play-circle{width:38px;height:38px;border-radius:50%;background:#7F77DD;display:flex;align-items:center;justify-content:center;color:#EEEDFE;font-size:15px;box-shadow:0 2px 12px rgba(83,74,183,.35)}
+
 .cta-section{margin-top:2rem;border-top:0.5px solid var(--color-border-tertiary);padding-top:2rem;display:flex;flex-direction:column;align-items:center;gap:1.25rem}
-.cta-title{font-size:22px;font-weight:500;text-align:center;color:var(--color-text-primary);letter-spacing:.01em}
-.cta-video-wrap{width:220px;aspect-ratio:9/16;border-radius:var(--border-radius-lg);overflow:hidden;border:0.5px solid var(--color-border-tertiary);background:#000;position:relative;cursor:pointer}
+.cta-title{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;font-style:italic;text-align:center;line-height:1.3}
+.cta-video-wrap{width:180px;aspect-ratio:9/16;border-radius:var(--border-radius-lg);overflow:hidden;border:0.5px solid var(--color-border-tertiary);background:#0a0a0a;position:relative;cursor:pointer}
 .cta-video-wrap video{width:100%;height:100%;object-fit:cover}
-.cta-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2);transition:opacity .15s}
-.cta-video-wrap:hover .cta-play-overlay{background:rgba(0,0,0,.1)}
-.cta-play-circle{width:52px;height:52px;border-radius:50%;background:#D4537E;display:flex;align-items:center;justify-content:center;color:#FBEAF0;font-size:22px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:#D4537E;color:#FBEAF0;font-size:15px;font-weight:500;padding:14px 28px;border-radius:var(--border-radius-lg);border:none;cursor:pointer;text-decoration:none;transition:background .15s,transform .1s;letter-spacing:.02em}
-.cta-btn:hover{background:#993556;transform:scale(1.03)}
-.cta-btn:active{transform:scale(0.98)}
-.modal-backdrop{display:none;position:absolute;inset:0;background:rgba(0,0,0,.75);z-index:10;align-items:center;justify-content:center;min-height:600px}
-.modal-backdrop.open{display:flex}
-.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);width:320px;max-width:95%;overflow:hidden}
-.modal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:0.5px solid var(--color-border-tertiary)}
-.modal-title{font-size:14px;font-weight:500}
-.close-btn{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:18px;padding:2px;border-radius:4px;display:flex;align-items:center;justify-content:center}
-.close-btn:hover{color:var(--color-text-primary)}
+.cta-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28);transition:opacity .2s}
+.cta-play-overlay.hidden{opacity:0;pointer-events:none}
+.cta-play-circle{width:50px;height:50px;border-radius:50%;background:#7F77DD;display:flex;align-items:center;justify-content:center;color:#EEEDFE;font-size:20px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:#534AB7;color:#EEEDFE;font-family:'DM Sans',var(--font-sans);font-size:13px;font-weight:500;padding:12px 24px;border-radius:var(--border-radius-lg);border:none;cursor:pointer;text-decoration:none;transition:background .15s,transform .1s;letter-spacing:.04em;text-transform:uppercase}
+.cta-btn:active{background:#3C3489;transform:scale(.98)}
+
+.backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center}
+.backdrop.open{display:flex}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);width:min(300px,92vw);overflow:hidden}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.modal-title{font-size:13px;font-weight:500}
+.close-btn{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:18px;padding:2px;border-radius:4px;display:flex;align-items:center;min-width:44px;min-height:44px;justify-content:center}
+.close-btn:active{color:var(--color-text-primary)}
 .video-wrapper{width:100%;aspect-ratio:9/16;background:#000}
 .video-wrapper video{width:100%;height:100%;object-fit:contain}
-.modal-footer{padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
-.modal-sub{font-size:12px;color:var(--color-text-secondary)}
-.modal-likes{display:flex;align-items:center;gap:4px;font-size:12px;color:#D4537E}
+.modal-footer{padding:9px 14px;display:flex;align-items:center;justify-content:space-between}
+.modal-sub{font-size:11px;color:var(--color-text-secondary)}
+.modal-likes{display:flex;align-items:center;gap:4px;font-size:11px;color:#534AB7}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 </style>
 
 <div class="showcase">
-  <h2 class="sr-only">Mostrador de vídeos exclusivos com CTA</h2>
+  <h2 class="sr-only">Portfólio de vídeos</h2>
   <div class="header">
     <div class="header-left">
-      <div class="avatar"><i class="ti ti-star" aria-hidden="true"></i></div>
+      <div class="avatar"><i class="ti ti-video" aria-hidden="true"></i></div>
       <div>
-        <div class="model-name">Sua Modelo</div>
-        <div class="model-sub">Conteúdo exclusivo</div>
+        <div class="model-name">Criador de Conteúdo</div>
+        <div class="model-sub">Portfólio de vídeos</div>
       </div>
-      <span class="badge">✦ Premium</span>
+      <span class="badge">✦ Destaque</span>
     </div>
   </div>
   <div class="stats-row">
     <div class="stat-card"><div class="stat-label">Vídeos</div><div class="stat-value">13</div></div>
-    <div class="stat-card"><div class="stat-label">Visualizações</div><div class="stat-value">4.2k</div></div>
-    <div class="stat-card"><div class="stat-label">Curtidas</div><div class="stat-value">1.8k</div></div>
-    <div class="stat-card"><div class="stat-label">Duração total</div><div class="stat-value">47min</div></div>
+    <div class="stat-card"><div class="stat-label">Views</div><div class="stat-value">4,2k</div></div>
+    <div class="stat-card"><div class="stat-label">Curtidas</div><div class="stat-value">1,8k</div></div>
+    <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value">47min</div></div>
   </div>
   <div class="grid" id="grid"></div>
-
   <div class="cta-section">
-    <div class="cta-title">QUER GOZAR COM MINHAS AMIGUINHAS?</div>
+    <div class="cta-title">Confira o vídeo em destaque</div>
     <div class="cta-video-wrap" id="cta-card">
-      <video id="cta-video" playsinline preload="none" loop="false"
-        src="https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd399dfcf77865dc98f32/download.mp4">
-      </video>
+      <video id="cta-video" playsinline preload="none" loop
+        src="https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd399dfcf77865dc98f32/download.mp4"></video>
       <div class="cta-play-overlay" id="cta-overlay">
         <div class="cta-play-circle"><i class="ti ti-player-play" aria-hidden="true"></i></div>
       </div>
     </div>
-    <a class="cta-btn" href="https://t.me/laismendesss_bot?start=58ab5204" target="_blank" rel="noopener">
-      <i class="ti ti-send" aria-hidden="true"></i> ENTRE AGORA NO GRUPINHO
-    </a>
+    <button class="cta-btn" id="cta-btn"><i class="ti ti-player-play" aria-hidden="true"></i> Ver todos os vídeos</button>
   </div>
+</div>
 
-  <div class="modal-backdrop" id="backdrop">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title" id="modal-title">Vídeo 1</span>
-        <button class="close-btn" id="close-btn" aria-label="Fechar"><i class="ti ti-x"></i></button>
-      </div>
-      <div class="video-wrapper">
-        <video id="modal-video" controls playsinline preload="none"></video>
-      </div>
-      <div class="modal-footer">
-        <span class="modal-sub" id="modal-sub"></span>
-        <span class="modal-likes"><i class="ti ti-heart" aria-hidden="true"></i> <span id="modal-likes">0</span></span>
-      </div>
+<div class="backdrop" id="backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">Vídeo</span>
+      <button class="close-btn" id="close-btn" aria-label="Fechar"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="video-wrapper"><video id="modal-video" controls playsinline preload="none"></video></div>
+    <div class="modal-footer">
+      <span class="modal-sub" id="modal-sub"></span>
+      <span class="modal-likes"><i class="ti ti-heart" aria-hidden="true"></i><span id="modal-likes">0</span></span>
     </div>
   </div>
 </div>
 
 <script>
 const videos=[
-  {id:1,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058c24b7e4dd4a03587/download.mp4",likes:312,views:"1.1k",icon:"ti-camera",color:"#F4C0D1"},
-  {id:2,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058347ef2c1f860c825/download.mp4",likes:241,views:"890",icon:"ti-moon-stars",color:"#B5D4F4"},
-  {id:3,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058c24b7e4dd4a0358c/download.mp4",likes:189,views:"670",icon:"ti-heart",color:"#9FE1CB"},
-  {id:4,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059c24b7e4dd4a035a5/download.mp4",likes:298,views:"952",icon:"ti-sparkles",color:"#F5C4B3"},
-  {id:5,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059347ef2c1f860c82e/download.mp4",likes:175,views:"540",icon:"ti-sun",color:"#CECBF6"},
-  {id:6,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059c24b7e4dd4a035ae/download.mp4",likes:220,views:"780",icon:"ti-moon",color:"#F4C0D1"},
-  {id:7,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059347ef2c1f860c830/download.mp4",likes:155,views:"420",icon:"ti-camera",color:"#FAC775"},
-  {id:8,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96269/download.mp4",likes:344,views:"1.3k",icon:"ti-droplet",color:"#B5D4F4"},
-  {id:9,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96267/download.mp4",likes:112,views:"310",icon:"ti-coffee",color:"#9FE1CB"},
-  {id:10,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc9626e/download.mp4",likes:401,views:"1.5k",icon:"ti-star",color:"#F5C4B3"},
-  {id:11,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96265/download.mp4",likes:98,views:"280",icon:"ti-brightness",color:"#CECBF6"},
-  {id:12,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd17e347ef2c1f860d97a/download.mp4",likes:267,views:"860",icon:"ti-camera",color:"#F4C0D1"},
-  {id:13,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd17ec24b7e4dd4a04607/download.mp4",likes:329,views:"1.1k",icon:"ti-heart",color:"#FAC775"},
+  {id:1,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058c24b7e4dd4a03587/download.mp4",likes:312,views:"1,1k",icon:"ti-camera",bg:"#EEEDFE",ic:"#534AB7"},
+  {id:2,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058347ef2c1f860c825/download.mp4",likes:241,views:"890",icon:"ti-moon-stars",bg:"#E6F1FB",ic:"#185FA5"},
+  {id:3,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd058c24b7e4dd4a0358c/download.mp4",likes:189,views:"670",icon:"ti-leaf",bg:"#E1F5EE",ic:"#0F6E56"},
+  {id:4,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059c24b7e4dd4a035a5/download.mp4",likes:298,views:"952",icon:"ti-sparkles",bg:"#FBEAF0",ic:"#993556"},
+  {id:5,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059347ef2c1f860c82e/download.mp4",likes:175,views:"540",icon:"ti-sun",bg:"#FAEEDA",ic:"#854F0B"},
+  {id:6,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059c24b7e4dd4a035ae/download.mp4",likes:220,views:"780",icon:"ti-mountain",bg:"#EEEDFE",ic:"#534AB7"},
+  {id:7,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059347ef2c1f860c830/download.mp4",likes:155,views:"420",icon:"ti-camera",bg:"#FAECE7",ic:"#993C1D"},
+  {id:8,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96269/download.mp4",likes:344,views:"1,3k",icon:"ti-droplet",bg:"#E6F1FB",ic:"#185FA5"},
+  {id:9,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96267/download.mp4",likes:112,views:"310",icon:"ti-coffee",bg:"#E1F5EE",ic:"#0F6E56"},
+  {id:10,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc9626e/download.mp4",likes:401,views:"1,5k",icon:"ti-star",bg:"#FAEEDA",ic:"#854F0B"},
+  {id:11,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd059dfcf77865dc96265/download.mp4",likes:98,views:"280",icon:"ti-brightness",bg:"#FBEAF0",ic:"#993556"},
+  {id:12,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd17e347ef2c1f860d97a/download.mp4",likes:267,views:"860",icon:"ti-camera",bg:"#EEEDFE",ic:"#534AB7"},
+  {id:13,src:"https://video.gumlet.io/68d074662b33c1c8577508ae/69fbd17ec24b7e4dd4a04607/download.mp4",likes:329,views:"1,1k",icon:"ti-heart",bg:"#FBEAF0",ic:"#993556"},
 ];
 
 const grid=document.getElementById("grid");
@@ -129,17 +135,58 @@ const closeBtn=document.getElementById("close-btn");
 
 grid.innerHTML=videos.map(v=>`
   <div class="video-card" data-id="${v.id}">
-    <div class="thumb" style="background:${v.color}22">
-      <i class="ti ${v.icon} thumb-icon" aria-hidden="true"></i>
-      <div class="play-overlay"><div class="play-circle"><i class="ti ti-player-play" aria-hidden="true"></i></div></div>
-      <span class="num-badge">${String(v.id).padStart(2,"0")}</span>
+    <div class="video-thumb-player" data-src="${v.src}">
+      <video preload="none" playsinline muted loop></video>
+      <div class="blur-cover">
+        <div class="blur-bg" style="background:${v.bg}"></div>
+        <i class="ti ${v.icon} blur-icon" style="color:${v.ic}" aria-hidden="true"></i>
+        <div class="thumb-play"><div class="thumb-play-circle"><i class="ti ti-player-play" aria-hidden="true"></i></div></div>
+      </div>
+      <span class="num-badge" style="z-index:4">${String(v.id).padStart(2,"0")}</span>
     </div>
     <div class="card-info">
       <div class="card-title">Vídeo ${v.id}</div>
-      <div class="card-meta">${v.views} views &middot; <span style="color:#D4537E">${v.likes} curtidas</span></div>
+      <div class="card-meta">${v.views} · <span class="card-likes">${v.likes} ♥</span></div>
     </div>
   </div>
 `).join("");
+
+let activeThumb=null;
+
+grid.querySelectorAll(".video-thumb-player").forEach(tp=>{
+  const vid=tp.querySelector("video");
+  const cover=tp.querySelector(".blur-cover");
+  tp.addEventListener("click",e=>{
+    e.stopPropagation();
+    if(activeThumb && activeThumb!==tp){
+      const prev=activeThumb.querySelector("video");
+      const prevCover=activeThumb.querySelector(".blur-cover");
+      prev.pause();prev.classList.remove("playing");prevCover.classList.remove("hidden");
+    }
+    if(vid.paused){
+      if(!vid.src)vid.src=tp.dataset.src;
+      vid.play();vid.classList.add("playing");cover.classList.add("hidden");
+      activeThumb=tp;
+    } else {
+      vid.pause();vid.classList.remove("playing");cover.classList.remove("hidden");
+      activeThumb=null;
+    }
+  });
+  vid.addEventListener("ended",()=>{vid.classList.remove("playing");cover.classList.remove("hidden");activeThumb=null;});
+});
+
+grid.querySelectorAll(".video-card").forEach(card=>{
+  card.addEventListener("click",e=>{
+    if(e.target.closest(".video-thumb-player"))return;
+    const v=videos[parseInt(card.dataset.id)-1];
+    modalTitle.textContent=`Vídeo ${v.id}`;
+    modalSub.textContent=`${v.views} visualizações`;
+    modalLikes.textContent=v.likes;
+    modalVideo.src=v.src;
+    modalVideo.load();
+    backdrop.classList.add("open");
+  });
+});
 
 function closeModal(){
   backdrop.classList.remove("open");
@@ -147,40 +194,16 @@ function closeModal(){
   modalVideo.removeAttribute("src");
   modalVideo.load();
 }
-
-grid.addEventListener("click",e=>{
-  const card=e.target.closest(".video-card");
-  if(!card)return;
-  const v=videos[parseInt(card.dataset.id)-1];
-  modalTitle.textContent=`Vídeo ${v.id}`;
-  modalSub.textContent=`${v.views} visualizações`;
-  modalLikes.textContent=v.likes;
-  modalVideo.src=v.src;
-  modalVideo.load();
-  backdrop.classList.add("open");
-});
-
 closeBtn.addEventListener("click",closeModal);
 backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeModal()});
 
 const ctaCard=document.getElementById("cta-card");
 const ctaVideo=document.getElementById("cta-video");
 const ctaOverlay=document.getElementById("cta-overlay");
-
 ctaCard.addEventListener("click",()=>{
-  if(ctaVideo.paused){
-    ctaVideo.play();
-    ctaOverlay.style.opacity="0";
-    ctaOverlay.style.pointerEvents="none";
-  } else {
-    ctaVideo.pause();
-    ctaOverlay.style.opacity="1";
-    ctaOverlay.style.pointerEvents="auto";
-  }
+  if(ctaVideo.paused){ctaVideo.play();ctaOverlay.classList.add("hidden");}
+  else{ctaVideo.pause();ctaOverlay.classList.remove("hidden");}
 });
-
-ctaVideo.addEventListener("ended",()=>{
-  ctaOverlay.style.opacity="1";
-  ctaOverlay.style.pointerEvents="auto";
-});
+ctaVideo.addEventListener("ended",()=>ctaOverlay.classList.remove("hidden"));
+document.getElementById("cta-btn").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
 </script>
